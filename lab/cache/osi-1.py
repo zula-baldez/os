@@ -27,32 +27,32 @@ def plot_graph(timestamps, data, name, isList):
     return 
     
 def cache_metrics():
-    cache_misses_percent = []
-    cache_references_num = []
-    for i in range(1, 17, 2):
-        sp = run_stress_ng(f'sudo perf stat -e cache-references,cache-misses stress-ng --cache 1 --cache-ways {i} --timeout 20')
-        output = sp.communicate()[1]
-        output = output.split('\n')
-        refs = output[6]
-        misses = output[7]
-        refs = re.sub(r'\s+', ' ', refs)
-        misses = re.sub(r'\s+', ' ', misses)
-        misses= re.sub(r',', '.', misses)
-        refs = re.sub(r',', '.', refs)
-        refs = refs.split(' ')
-        misses = misses.split(' ')
+    # cache_misses_percent = []
+    # cache_references_num = []
+    # for i in range(1, 17, 2):
+    #     sp = run_stress_ng(f'sudo perf stat -e cache-references,cache-misses stress-ng --cache 1 --cache-ways {i} --timeout 20')
+    #     output = sp.communicate()[1]
+    #     output = output.split('\n')
+    #     refs = output[6]
+    #     misses = output[7]
+    #     refs = re.sub(r'\s+', ' ', refs)
+    #     misses = re.sub(r'\s+', ' ', misses)
+    #     misses= re.sub(r',', '.', misses)
+    #     refs = re.sub(r',', '.', refs)
+    #     refs = refs.split(' ')
+    #     misses = misses.split(' ')
 
-        print(refs)
-        print(misses)
-        cache_misses_percent.append(float(misses[-7]))
-        j = 1
-        refs_count = 0
-        while(refs[j].isnumeric()): 
-            refs_count = refs_count*1000 + float(refs[j])
-            j+=1
-        cache_references_num.append(refs_count)
-    plot_graph([i for i in range(1, 17, 2)], cache_references_num, 'cache-ways-refs', True)
-    plot_graph([i for i in range(1, 17, 2)], cache_misses_percent, 'cache-ways-misses', True)
+    #     print(refs)
+    #     print(misses)
+    #     cache_misses_percent.append(float(misses[-7]))
+    #     j = 1
+    #     refs_count = 0
+    #     while(refs[j].isnumeric()): 
+    #         refs_count = refs_count*1000 + float(refs[j])
+    #         j+=1
+    #     cache_references_num.append(refs_count)
+    # plot_graph([i for i in range(1, 17, 2)], cache_references_num, 'cache-ways-refs', True)
+    # plot_graph([i for i in range(1, 17, 2)], cache_misses_percent, 'cache-ways-misses', True)
 
     cache_misses_percent = []
     cache_references_num = []

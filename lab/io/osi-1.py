@@ -30,9 +30,8 @@ def read_system_data(sb, command, col_index, name ,thread_num):
                     new_output.append(row)        
             output = new_output        
             output = sorted(output, key=lambda x: x[1])
-            output = [x for x in output if float(x[col_index]) != 0]
             print(len(output))
-            if(len(output) == thread_num):
+            if(len(output) == thread_num+1):
                 print(output)
                 timestamps.append( time.time())
                 for i in range(thread_num):
@@ -62,10 +61,10 @@ def plot_graph(timestamps, data, name, isList):
     
 
 def io_metrics():
+    # for i in range(1, 52, 10):
+    #     sp = run_stress_ng(f'stress-ng --ioprio {i} --timeout 30')
+    #     read_system_data(sp, 'iotop -b -P -n 1 | grep -m 123 stress-ng',6, f'ioprio-{i}', i)
     for i in range(1, 52, 10):
-        sp = run_stress_ng(f'stress-ng --ioprio {i} --timeout 30')
-        read_system_data(sp, 'iotop -b -P -n 1 | grep -m 123 stress-ng',6, f'iostat-{i}', i)
-    for i in range(1, 52, 10):
-        sp = run_stress_ng(f'stress-ng --ioport {i} --ioprio {i} --timeout 30')
-        read_system_data(sp, 'iotop -b -P -n 1 | grep -m 123 stress-ng',6, f'iostat-ioprio-{i}', i, 6)
+        sp = run_stress_ng(f'stress-ng --ioport {i} --timeout 30')
+        read_system_data(sp, 'iotop -b -P -n 1 | grep -m 123 stress-ng',6, f'ioport-{i}', i)
 io_metrics()
